@@ -2,7 +2,7 @@
 @name           RYM Simple Tweaks
 @namespace      https://github.com/924e50c0
 @author         924e50c0
-@version        0.0.2
+@version        0.0.3
 @description    Tweaks for RYM. Works best with Night theme
 
 @preprocessor   stylus
@@ -283,7 +283,7 @@
     }
 
     if customIcons {
-        [class*="my_catalog"] {
+        [class*="my_catalog"]:not([class*="format"]) {
             &> :is([id*="_btn"], [class*="_btn"]) {
                 background-image: unset;
 
