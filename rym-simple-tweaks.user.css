@@ -1,0 +1,333 @@
+/* ==UserStyle==
+@name           RYM Simple Tweaks
+@namespace      https://github.com/924e50c0
+@author         924e50c0
+@version        0.0.2
+@description    Tweaks for RYM. Works best with Night theme
+
+@preprocessor   stylus
+
+@var checkbox   useAccent           "accent color" 1
+@var color      accentColor         " ↳ " #006ED1
+@var text       fontFamily          "custom font" ProximaNova
+@var checkbox   softBorders         "softer borders" 1
+@var checkbox   hideBG              "hide custom backgrounds" 1
+@var checkbox   genreColumns        "vote on genres: two columns" 1
+@var checkbox   scrollableContent   "scrollable columns 🧪" 0
+@var checkbox   customIcons         "color catalog icons" 1
+@var number     colorbarSize        "album color bar separator size" [2, 1, 15]
+@var checkbox   commonRadius        "unify border radiuses 🧪" 1
+@var range      borderRadius        " ↳ " [3, 0, 10]
+
+==/UserStyle== */
+@-moz-document domain("rateyourmusic.com") {
+
+    body {
+        font-family: fontFamily, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    div.review_header_img {
+        background-color: unset !important;
+    }
+
+    html.theme_night {
+        --neutral-dark-20: #353535;
+
+        #content_cover {
+            background: rgba(8, 8, 8, .6);
+        }
+
+        a.header_item:hover,
+        a.header_mod_role:hover {
+            background: rgba(128, 128, 128, .2);
+        }
+    }
+
+    :root {
+        if useAccent {
+            accent-color: accentColor;
+            --btn-primary-background-default: accentColor !important;
+            --btn-primary-background-hover: darken(accentColor, 6) !important;
+            --btn-expand-background-default: desaturate(darken(accentColor, 18), 62%) !important;
+            /* inaccurate */
+            --btn-expand-background-hover: desaturate(darken(accentColor, 14), 62%) !important;
+            /* inaccurate */
+            --btn-secondary-background-default: desaturate(lighten(accentColor, 18), 35%) !important;
+            /* inaccurate */
+            --btn-secondary-background-hover: desaturate(lighten(accentColor, 24), 35%) !important;
+            /* inaccurate */
+            --gen-blue-dark: lighten(accentColor, 35) !important;
+            --gen-blue-darker: lighten(accentColor, 39) !important;
+            --gen-blue-darkest: lighten(accentColor, 44) !important;
+            --gen-blue-med: lighten(accentColor, 15) !important;
+            --gen-blue-light: saturate(darken(accentColor, 27%), 0) !important;
+            --gen-blue-lightest: saturate(darken(accentColor, 58%), 12%) !important;
+            --gen-blue-neon: saturate(lighten(accentColor, 19), 60) !important;
+            --link-text-default: lighten(accentColor, 35) !important;
+            --link-text-hover: lighten(accentColor, 48) !important;
+            --average-rating: linear-gradient(accentColor, lighten(accentColor, 35)) !important;
+        }
+
+        if softBorders {
+            --ui-detail-neutral: var(--mono-e8) !important;
+        }
+    }
+
+    if useAccent {
+        a.sametitle:hover {
+            color: saturate(lighten(accentColor, 20), 20) !important
+        }
+
+        #chart_div g>g:nth-child(2)>rect {
+            fill: accentColor;
+        }
+
+        #chart_div g[clip-path*="url(https://rateyourmusic.com/"]>g:nth-child(2)>g rect:nth-child(1) {
+            fill: accentColor;
+        }
+    }
+
+    if softBorders {
+        #chart_div g>g:nth-child(odd)>rect {
+            fill: var(--ui-detail-neutral)
+        }
+
+        #chart_div2 g>g>rect {
+            fill: var(--ui-detail-neutral)
+        }
+    }
+
+
+    div.album_title~table.color_bar {
+        height: (colorbarSize)px !important;
+
+        &>tbody>tr {
+            height: (colorbarSize)px !important;
+
+            &>td {
+                height: (colorbarSize)px !important;
+            }
+        }
+    }
+
+    if hideBG {
+        body {
+            background-image: unset !important;
+        }
+    }
+
+    if genreColumns {
+        table.mbgen.votingbox>tbody {
+            form {
+                margin: 5px;
+            }
+
+            #prigen,
+            #secgen {
+                font-size: 14px;
+            }
+
+            display: grid;
+            grid-template-areas: "a c" "b d";
+
+            &>tr:nth-child(1) {
+                grid-area: a;
+
+                &>td {
+                    border-left: none
+                }
+            }
+
+            &>tr:nth-child(2) {
+                grid-area: b;
+
+                &>td {
+                    border-left: none
+                }
+            }
+
+            &>tr:nth-child(3) {
+                grid-area: c
+            }
+
+            &>tr:nth-child(4) {
+                grid-area: d
+            }
+
+            td:last-child {
+                border-right: none
+            }
+        }
+    }
+
+    if commonRadius {
+        div.release_navigation_guidance {
+            border-bottom: none;
+        }
+
+        ul.tracks,
+        .catalog_date,
+        .catalog_btn_options,
+        .my_review,
+        .my_catalog_tags .tag_dlg,
+        div.prev_image img,
+        div.next_image img {
+            /* default: none */
+            border-radius: (borderRadius)px;
+        }
+
+        .header_user_img,
+        .my_catalog_rating,
+        div.issue_img,
+        .catalog_list span.navspan,
+        .review_list,
+        .review_header,
+        .review_header_img,
+        ul.credits,
+        .btn.blue_btn,
+        #add_to_list_lists,
+        .comments_load,
+        .comment_header,
+        .comment_img,
+        .comment_post_btn,
+        .comment_post_add_btn,
+        .comment_cancel_btn,
+        .catalog_stats div.header,
+        .catalog_header,
+        .ui_button,
+        div.comments {
+            /* default: 3 */
+            border-radius: (borderRadius)px;
+        }
+
+        .catalog_header>div[style*="border-radius:"][style*="3px"] {
+            /* default: 3 */
+            border-radius: (borderRadius)px !important;
+        }
+
+        .catalog_btn,
+        .format_btn,
+        .review_save_btn,
+        .review_btn,
+        .track_rating_btn,
+        .listening_btn,
+        .notes_btn,
+        .more_btn,
+        .tag_btn {
+            /* default: 4 */
+            border-radius: (borderRadius)px;
+        }
+
+        ul.issues,
+        ul.lists,
+        ul.lists li,
+        .youtube_img,
+        .youtube_playbutton,
+        ul.suggestions,
+        ul.issues li.release_view,
+        div.release_navigation_links {
+            /* default: 5 */
+            border-radius: (borderRadius)px;
+        }
+
+        .ui_media_link_btn {
+            /* default: .4em */
+            border-radius: (borderRadius)px;
+        }
+
+        .ui_search {
+            /* default: 25px */
+            border-radius: (borderRadius)px;
+        }
+
+        .rating_info_ratings {
+            /* default: 3 */
+            border-top-left-radius: (borderRadius)px;
+            border-bottom-left-radius: (borderRadius)px;
+        }
+
+        .rating_info_track_ratings {
+            /* default: 3 */
+            border-top-right-radius: (borderRadius)px;
+            border-bottom-right-radius: (borderRadius)px;
+        }
+
+        ul.tracks li:first-child {
+            /* default: 5 */
+            border-top-left-radius: (borderRadius)px;
+            border-top-right-radius: (borderRadius)px;
+        }
+
+        ul.tracks li:last-child {
+            /* default: 5 */
+            border-bottom-left-radius: (borderRadius)px;
+            border-bottom-right-radius: (borderRadius)px;
+        }
+    }
+
+    if scrollableContent {
+        div.row {
+            max-height: 100vh;
+            padding-right: 5px;
+
+            & div#column_container_left {
+                overflow: scroll;
+                max-height: 95vh;
+            }
+
+            & div#column_container_right {
+                overflow: scroll;
+                max-height: 98vh;
+            }
+        }
+    }
+
+    if customIcons {
+        [class*="my_catalog"] {
+            &> :is([id*="_btn"], [class*="_btn"]) {
+                background-image: unset;
+
+                &::before {
+                    content: "";
+                    display: inline-block;
+                    position: absolute;
+                    width: 2.2em;
+                    aspect-ratio: 1/1;
+                    mask-size: cover;
+                    background-color: currentColor;
+                }
+            }
+
+            .catalog_btn::before {
+                mask-image: url(https://e.snmc.io/2.5/img/line_icon_catalog.png);
+                top: 3.5px;
+                left: 4px;
+            }
+
+            .listening_btn::before {
+                mask-image: url(https://e.snmc.io/2.5/img/line_icon_listening.png);
+                width: 2.3em !important;
+                top: 3px;
+                left: 4px;
+            }
+
+            .tag_btn::before {
+                mask-image: url(https://e.snmc.io/2.5/img/line_icon_tag.png);
+                top: 4px;
+                left: 3px;
+            }
+
+            .review_btn::before {
+                mask-image: url(https://e.snmc.io/2.5/img/line_icon_review.png);
+                top: 4px;
+                left: 3px;
+            }
+
+            .track_rating_btn::before {
+                mask-image: url(https://e.snmc.io/2.5/img/line_icon_trackrating.png);
+                top: 4px;
+                left: 4px;
+            }
+        }
+    }
+}
