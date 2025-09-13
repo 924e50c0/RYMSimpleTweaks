@@ -2,7 +2,7 @@
 @name           RYM Simple Tweaks
 @namespace      https://github.com/924e50c0
 @author         924e50c0
-@version        0.0.3
+@version        0.0.4
 @description    Tweaks for RYM. Works best with Night theme
 
 @preprocessor   stylus
@@ -13,6 +13,9 @@
 @var checkbox   softBorders         "softer borders" 1
 @var checkbox   hideBG              "hide custom backgrounds" 1
 @var checkbox   genreColumns        "vote on genres: two columns" 1
+@var checkbox   voteColor           " ↳ color vote type" 0
+@var checkbox   genreLimit          " ↳ limit displayed users" 0
+@var number     userWidth           "  ↳ max width" [248, 0, 2000]
 @var checkbox   scrollableContent   "scrollable columns 🧪" 0
 @var checkbox   customIcons         "color catalog icons" 1
 @var number     colorbarSize        "album color bar separator size" [2, 1, 15]
@@ -78,33 +81,33 @@
             color: saturate(lighten(accentColor, 20), 20) !important
         }
 
-        #chart_div g>g:nth-child(2)>rect {
+        #chart_div g > g:nth-child(2) > rect {
             fill: accentColor;
         }
 
-        #chart_div g[clip-path*="url(https://rateyourmusic.com/"]>g:nth-child(2)>g rect:nth-child(1) {
+        #chart_div g[clip-path*="url(https://rateyourmusic.com/"] > g:nth-child(2) > g rect:nth-child(1) {
             fill: accentColor;
         }
     }
 
     if softBorders {
-        #chart_div g>g:nth-child(odd)>rect {
+        #chart_div g > g:nth-child(odd) > rect {
             fill: var(--ui-detail-neutral)
         }
 
-        #chart_div2 g>g>rect {
+        #chart_div2 g > g > rect {
             fill: var(--ui-detail-neutral)
         }
     }
 
 
-    div.album_title~table.color_bar {
+    div.album_title ~ table.color_bar {
         height: (colorbarSize)px !important;
 
-        &>tbody>tr {
+        & > tbody > tr {
             height: (colorbarSize)px !important;
 
-            &>td {
+            & > td {
                 height: (colorbarSize)px !important;
             }
         }
@@ -117,7 +120,7 @@
     }
 
     if genreColumns {
-        table.mbgen.votingbox>tbody {
+        table.mbgen.votingbox > tbody {
             form {
                 margin: 5px;
             }
@@ -130,32 +133,50 @@
             display: grid;
             grid-template-areas: "a c" "b d";
 
-            &>tr:nth-child(1) {
+            & > tr:nth-child(1) {
                 grid-area: a;
 
-                &>td {
+                & > td {
                     border-left: none
                 }
             }
 
-            &>tr:nth-child(2) {
+            & > tr:nth-child(2) {
                 grid-area: b;
 
-                &>td {
+                & > td {
                     border-left: none
                 }
             }
 
-            &>tr:nth-child(3) {
+            & > tr:nth-child(3) {
                 grid-area: c
             }
 
-            &>tr:nth-child(4) {
+            & > tr:nth-child(4) {
                 grid-area: d
             }
 
             td:last-child {
                 border-right: none
+            }
+        }
+
+        if voteColor {
+            div:is([class="genrea"], [class="genred"]) span.small:nth-child(4) > b:first-child {
+                color: var(--gen-bg-abs-darkgreen)
+            }
+            div:is([class="genrea"], [class="genred"]) span.small:nth-child(6) > b:first-child {
+                color: var(--gen-text-red)
+            }
+        }
+        if genreLimit {
+            div:is([class="genrea"], [class="genred"]) span.small {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-width: (userWidth)px;
+                text-wrap: nowrap;
+                display: inline-block;
             }
         }
     }
@@ -200,7 +221,7 @@
             border-radius: (borderRadius)px;
         }
 
-        .catalog_header>div[style*="border-radius:"][style*="3px"] {
+        .catalog_header > div[style*="border-radius:"][style*="3px"] {
             /* default: 3 */
             border-radius: (borderRadius)px !important;
         }
@@ -284,7 +305,7 @@
 
     if customIcons {
         [class*="my_catalog"]:not([class*="format"]) {
-            &> :is([id*="_btn"], [class*="_btn"]) {
+            & > :is([id*="_btn"], [class*="_btn"]) {
                 background-image: unset;
 
                 &::before {
