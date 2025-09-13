@@ -15,6 +15,7 @@ Install or download the [theme](https://github.com/924e50c0/RYMSimpleTweaks/raw/
 ## 🧪 To-do list
 ### Fixes
 - Better support for border radius
+- Custom icons fixes
 
 ## 🖼️ Screenshots
 | ![preview](/previews/preview.png)                       |
@@ -22,4 +23,5 @@ Install or download the [theme](https://github.com/924e50c0/RYMSimpleTweaks/raw/
 
 ## 📃 Changelog
 - 13.09.2025 / v0.0.4 - Added new option to limit the number of displayed users who voted on genres
+- 06.09.2025 / v0.0.3 - Fixed catalog format showing blank square when using custom icons
 - 06.09.2025 / v0.0.2 - Added custom font support
