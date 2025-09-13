@@ -21,4 +21,5 @@ Install or download the [theme](https://github.com/924e50c0/RYMSimpleTweaks/raw/
 | ------------------------------------------------------- |
 
 ## 📃 Changelog
+- 13.09.2025 / v0.0.4 - Added new option to limit the number of displayed users who voted on genres
 - 06.09.2025 / v0.0.2 - Added custom font support
