@@ -2,7 +2,7 @@
 @name           RYM Simple Tweaks
 @namespace      https://github.com/924e50c0
 @author         924e50c0
-@version        0.0.4
+@version        0.0.5
 @description    Tweaks for RYM. Works best with Night theme
 
 @preprocessor   stylus
@@ -21,28 +21,87 @@
 @var number     colorbarSize        "album color bar separator size" [2, 1, 15]
 @var checkbox   commonRadius        "unify border radiuses 🧪" 1
 @var range      borderRadius        " ↳ " [3, 0, 10]
+@var checkbox   rymFixes            "minor fixes" 1
+@var checkbox   delHist             " ↳ remove play history artwork" 0
+@var checkbox   onlyMissing         "  ↳ only when missing artwork" 0
 
 ==/UserStyle== */
-@-moz-document domain("rateyourmusic.com") {
+@-moz-document domain("rateyourmusic.com"),
+domain("rym.fm") {
 
     body {
         font-family: fontFamily, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-
-    div.review_header_img {
-        background-color: unset !important;
-    }
-
-    html.theme_night {
-        --neutral-dark-20: #353535;
-
-        #content_cover {
-            background: rgba(8, 8, 8, .6);
+    if rymFixes {
+        div.review_header_img {
+            background-color: unset !important;
         }
 
-        a.header_item:hover,
-        a.header_mod_role:hover {
-            background: rgba(128, 128, 128, .2);
+        html.theme_night {
+            --neutral-dark-20: #353535;
+
+            #content_cover {
+                background: rgba(8, 8, 8, .6);
+            }
+
+            a.header_item:hover,
+            a.header_mod_role:hover {
+                background: rgba(128, 128, 128, .2);
+            }
+        }
+
+        div.release_my_catalog .my_catalog_rating {
+            height: 33.6px;
+            display: flex;
+            align-items: center;
+        }
+
+        div.profilesearch form[action="/misc/searchredir"] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .expand_button,
+        a.expand_button,
+        li.expand_button {
+            margin-bottom: 0;
+        }
+
+        ul.issues li.release_view {
+            margin-top: 0;
+        }
+
+        div.page_charts_section_charts_item_title > a.song {
+            /* prevents date from being crushed & displayed vertically when song title is too long */
+            max-width: 48ch
+        }
+
+        div.review_list {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            & div:last-child {
+                display: none;
+            }
+            & div.review_sort,
+            span.navspan {
+                margin: 0
+            }
+        }
+
+        if delHist {
+            unless onlyMissing {
+                div.play_history_artbox {
+                    display: none;
+                }
+            }
+            if onlyMissing {
+                div.play_history_artbox:has(img[src="https://e.snmc.io/2.5/img/artwork_missing150x150.png"]) {
+                    display: none;
+                }
+            }
         }
     }
 
@@ -192,9 +251,24 @@
         .my_review,
         .my_catalog_tags .tag_dlg,
         div.prev_image img,
-        div.next_image img {
+        div.next_image img,
+        .ui_browser_input_frame {
             /* default: none */
             border-radius: (borderRadius)px;
+        }
+
+        .page_artist_songs_song:first-child,
+        .page_object_discussion_thread:first-child {
+            /* default: none */
+            border-top-left-radius: (borderRadius)px;
+            border-top-right-radius: (borderRadius)px;
+        }
+
+        .page_artist_songs_song:last-child,
+        .page_object_discussion_thread:last-child {
+            /* default: none */
+            border-bottom-left-radius: (borderRadius)px;
+            border-bottom-right-radius: (borderRadius)px;
         }
 
         .header_user_img,
@@ -216,7 +290,30 @@
         .catalog_stats div.header,
         .catalog_header,
         .ui_button,
-        div.comments {
+        div.comments,
+        div.issue_no_img,
+        .review_header_no_img,
+        .btn,
+        input[type="button"],
+        input[type="submit"],
+        input,
+        select,
+        textarea,
+        .input_auto_resize_frame,
+        .input_auto_resize_frame::after,
+        .expand_button,
+        a.expand_button,
+        li.expand_button,
+        .ui_button.button_expand,
+        .disco_release,
+        .disco_cat_inner_issue,
+        .disco_cat_inner,
+        .disco_expand_section_btn,
+        .disco_search,
+        .comment_no_img,
+        ul.shows li,
+        .component_discography_item_image img,
+        .component_discography_item_image.no_image {
             /* default: 3 */
             border-radius: (borderRadius)px;
         }
@@ -226,6 +323,7 @@
             border-radius: (borderRadius)px !important;
         }
 
+        img.image_release,
         .catalog_btn,
         .format_btn,
         .review_save_btn,
@@ -234,7 +332,9 @@
         .listening_btn,
         .notes_btn,
         .more_btn,
-        .tag_btn {
+        .tag_btn,
+        .bump_btn,
+        .comments_post {
             /* default: 4 */
             border-radius: (borderRadius)px;
         }
@@ -246,8 +346,35 @@
         .youtube_playbutton,
         ul.suggestions,
         ul.issues li.release_view,
-        div.release_navigation_links {
+        div.release_navigation_links,
+        .page_charts_settings_summary,
+        .page_charts_section_charts_version_selector,
+        div.list_image,
+        .page_genre_index_hierarchy_item_collage img {
             /* default: 5 */
+            border-radius: (borderRadius)px;
+        }
+
+        .page_charts_section_charts_item,
+        .profile_listening_container {
+            /* default: 6 */
+            border-radius: (borderRadius)px;
+        }
+
+        .musictoolbar a {
+            /* default: .2rem */
+            border-radius: (borderRadius)px;
+        }
+
+        .page_chart_query_item,
+        .listportal_item_profilepic,
+        .listportal_item_art {
+            /* default: .3rem */
+            border-radius: (borderRadius)px;
+        }
+
+        .page_section_share a.shortcut_link_btn {
+            /* default: .33rem */
             border-radius: (borderRadius)px;
         }
 
@@ -256,17 +383,37 @@
             border-radius: (borderRadius)px;
         }
 
+        .page_genre_index_hierarchy_item_main {
+            /* default: 1em */
+            border-radius: (borderRadius)px;
+        }
+
+        .page_charts_section_scope_item {
+            /* default: 1.5em */
+            border-radius: (borderRadius)px;
+        }
+
+        .ui_pagination_number {
+            /* default: 3em */
+            border-radius: (borderRadius)px;
+        }
+
+        .ui_button.btn_page_charts_common_charts {
+            /* default: 4.125em */
+            border-radius: (borderRadius)px;
+        }
+
         .ui_search {
             /* default: 25px */
             border-radius: (borderRadius)px;
         }
-
+        .disco_cat,
         .rating_info_ratings {
             /* default: 3 */
             border-top-left-radius: (borderRadius)px;
             border-bottom-left-radius: (borderRadius)px;
         }
-
+        .disco_expandissues,
         .rating_info_track_ratings {
             /* default: 3 */
             border-top-right-radius: (borderRadius)px;
@@ -304,7 +451,7 @@
     }
 
     if customIcons {
-        [class*="my_catalog"]:not([class*="format"]) {
+        [class*="my_catalog"]:not([class*="format"]):not([class*="bump"]) {
             & > :is([id*="_btn"], [class*="_btn"]) {
                 background-image: unset;
 
