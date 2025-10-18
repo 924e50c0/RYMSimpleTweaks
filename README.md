@@ -22,6 +22,7 @@ Install or download the [theme](https://github.com/924e50c0/RYMSimpleTweaks/raw/
 | ------------------------------------------------------- |
 
 ## 📃 Changelog
+- 18.10.2025 / v0.0.6 - Removed broken fix
 - 14.09.2025 / v0.0.5 - Minor visual fixes
 - 13.09.2025 / v0.0.4 - Added new option to limit the number of displayed users who voted on genres
 - 06.09.2025 / v0.0.3 - Fixed catalog format showing blank square when using custom icons
